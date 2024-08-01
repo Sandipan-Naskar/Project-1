@@ -1,190 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Home</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #e8f5e9;
+        }
 
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-   <link rel="stylesheet" href="homepage.css">
+        .container {
+            display: flex;
+            border: 1px solid #ddd;
+            width: 800px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
-   <style>
-      /* Styles for Cart Popup */
-      .cart-popup {
-         position: fixed;
-         top: 20px;
-         right: 20px;
-         background-color: var(--white);
-         border-radius: .5rem;
-         padding: 2rem;
-         box-shadow: 0 0 10px rgba(0,0,0,0.1);
-         z-index: 2000;
-         max-width: 300px;
-         display: none;
-         flex-direction: column;
-         gap: 1rem;
-      }
-      .cart-popup.active {
-         display: flex;
-      }
-      .cart-popup h2 {
-         font-size: 2rem;
-         margin-bottom: 1rem;
-      }
-      .cart-popup .cart-item {
-         display: flex;
-         justify-content: space-between;
-         align-items: center;
-         border-bottom: var(--border);
-         padding-bottom: .5rem;
-      }
-      .cart-popup .cart-item:last-child {
-         border-bottom: none;
-      }
-      .cart-popup .cart-item h3 {
-         font-size: 1.5rem;
-      }
-      .cart-popup .cart-item span {
-         font-size: 1.5rem;
-         color: var(--main-color);
-      }
-   </style>
+        .left {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
 
+        .right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f4f4f9;
+        }
+
+        .right img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        h3 {
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 30px;
+            color: #777;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+
+        button {
+            border: 1px solid #ddd;
+            height: 50px;
+            width: 120px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            background-color: #f0f0f0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .line-container {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .line {
+            flex-grow: 1;
+            height: 1px;
+            background-color: #ddd;
+        }
+
+        .text {
+            margin: 0 10px;
+            white-space: nowrap;
+            color: #999;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            height: 40px;
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            font-size: 14px;
+            color: #777;
+            gap: 150px;
+        }
+
+        .remember-forgot label {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-forgot input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .forgot {
+            color: darkseagreen;
+            text-decoration: none;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        #signin {
+            color: white;
+            background-color: darkseagreen;
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        #signin:hover {
+            background-color: #0056b3;
+        }
+
+        .foot {
+            font-size: 14px;
+            margin-top: 20px;
+            color: #777;
+        }
+
+        .foot .signup {
+            color: seagreen;
+            text-decoration: none;
+        }
+
+        .foot .signup:hover {
+            text-decoration: underline;
+        }
+
+        /* New Styles for Cart Section */
+        .cart-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .cart-header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .cart-items {
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .cart-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .cart-item span {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .cart-total {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        .checkout-button {
+            width: 100%;
+            padding: 10px;
+            background-color: seagreen;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        .checkout-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="left">
+            <h1>Welcome Back</h1>
+            <h3>Please enter your details to sign in</h3>
 
-<header class="header">
-   <section class="flex">
-      <a href="index.html" class="logo">Education</a>
-      <form action="search.html" method="post" class="search-form">
-         <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
-         <button type="submit" class="fas fa-search"></button>
-      </form>
-
-      <div class="icons">
-         <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="search-btn" class="fas fa-search"></div>
-         <div id="user-btn" class="fas fa-user"></div>
-         <div id="toggle-btn" class="fas fa-sun"></div>
-         <div id="cart-btn" class="fas fa-shopping-cart"></div>
-         <span id="cart-count">0</span>
-      </div>
-   </section>
-</header>   
-
-<div class="side-bar">
-   <div id="close-btn"><i class="fas fa-times"></i></div>
-   <div class="profile">
-      <img src="https://img.freepik.com/premium-photo/simple-study-smile-logo-graduation-hat-cap-toga-arrow_959624-27809.jpg?size=626&ext=jpg&ga=GA1.1.325011917.1722362251&semt=ais_hybrid" class="image" alt="">
-      <h3 class="name">SHUBHAM</h3>
-      <p class="role">learner</p>
-      <a href="index.html" class="btn">Namaste!</a>
-   </div>
-   <nav class="navbar">
-      <a href="index.html"><i class="fas fa-home"></i><span>Home</span></a>
-      <a href="index.html"><i class="fas fa-question"></i><span>About</span></a>
-      <a href="index.html"><i class="fas fa-graduation-cap"></i><span>Courses</span></a>
-      <a href="index.html"><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a>
-      <a href="index.html"><i class="fas fa-headset"></i><span>Contact Us</span></a>
-   </nav>
-</div>
-
-<section class="home-grid">
-   <h1 class="heading">Quick Options</h1>
-   <div class="box-container">
-      <!-- Example box with "Add to Cart" button -->
-      <div class="box">
-         <h3 class="title">Complete HTML Tutorial</h3>
-         <p class="likes">Total likes : <span>25</span></p>
-         <p class="likes">Total comments : <span>12</span></p>
-         <p class="likes">Saved playlists : <span>4</span></p>
-         <a href="#" class="inline-btn">View Likes</a>
-         <a href="#" class="inline-btn">View Comments</a>
-         <a href="#" class="inline-btn">View Playlists</a>
-         <button class="btn add-to-cart" data-course="Complete HTML Tutorial">Add to Cart</button>
-      </div>
-      <!-- Add more boxes as needed -->
-   </div>
-</section>
-
-<section class="courses">
-   <h1 class="heading">Our Courses</h1>
-   <div class="box-container">
-      <div class="box">
-         <div class="tutor">
-            <img src="https://images.unsplash.com/photo-1520262494112-9fe481d36ec3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRyZWV8ZW58MHx8MHx8fDA%3D" alt="">
-            <div class="info">
-               <h3>Sandipan Naskar</h3>
-               <span>21-10-2022</span>
+            <div class="button-container">
+                <button><img src="image1.jpg" alt="Icon 1"></button>
+                <button><img src="image2.jpg" alt="Icon 2"></button>
+                <button><img src="image3.jpg" alt="Icon 3"></button>
             </div>
-         </div>
-         <div class="thumb">
-            <img src="https://i.ytimg.com/vi/Rek0NWPCNOc/hq720.jpg?sqp=-…RUAAIhCGAE=&rs=AOn4CLDqmheFKTusvfnRAnjN5ZTxxhXFGw" alt="">
-            <span>10 videos</span>
-         </div>
-         <h3 class="title">Complete HTML Tutorial</h3>
-         <a href="https://youtu.be/G3e-cpL7ofc?si=mU0QQDjx3dUbTXHfl" class="inline-btn">View Playlist</a>
-         <button class="btn add-to-cart" data-course="Complete HTML Tutorial">Add to Cart</button>
-      </div>
 
-      <!-- Repeat similar blocks for other courses -->
+            <div class="line-container">
+                <span class="line"></span>
+                <span class="text">or</span>
+                <span class="line"></span>
+            </div>
 
-   </div>
-</section>
+            <form id="loginForm">
+                <input type="email" id="email" placeholder="Enter your email..." name="email" required />
+                <input type="password" id="password" placeholder="Enter your password..." required />
 
-<!-- Cart Popup -->
-<div class="cart-popup" id="cart-popup">
-   <h2>Cart</h2>
-   <div class="cart-items"></div>
-   <button class="btn checkout-btn">Checkout</button>
-</div>
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" name="remember" id="remember"> Remember me
+                    </label>
+                    <a href="forgot-password.html" class="forgot">Forgot password?</a>
+                </div>
 
-<footer class="footer">
-   &copy; Copyright @ 2024 by <span>SHUBHAM ,SANDIPAN</span> | All rights reserved!
-</footer>
+                <button id="signin" type="submit">Sign In</button>
+            </form>
 
-<script>
-   // JavaScript to manage cart
-   const cart = [];
-   const cartCount = document.getElementById('cart-count');
-   const cartPopup = document.getElementById('cart-popup');
-   const cartItemsContainer = cartPopup.querySelector('.cart-items');
-   const cartBtn = document.getElementById('cart-btn');
+            <div class="foot">
+                <p>Don't have an account yet? <a href="signup.html" class="signup">Sign Up</a></p>
+            </div>
 
-   function updateCartCount() {
-      cartCount.textContent = cart.length;
-   }
+            <!-- Cart Section -->
+            <div class="cart-container">
+                <div class="cart-header">Your Cart</div>
+                <div class="cart-items" id="cartItems">
+                    <!-- Cart items will be dynamically added here -->
+                </div>
+                <div class="cart-total" id="cartTotal">Total: $0</div>
+                <button class="checkout-button" onclick="checkout()">Checkout</button>
+            </div>
+        </div>
+        <div class="right">
+            <img src="logo.jpg" alt="Login Image">
+        </div>
+    </div>
 
-   function updateCartPopup() {
-      cartItemsContainer.innerHTML = '';
-      cart.forEach(item => {
-         const cartItem = document.createElement('div');
-         cartItem.className = 'cart-item';
-         cartItem.innerHTML = `
-            <h3>${item.name}</h3>
-            <span>₹${item.price}</span>
-         `;
-         cartItemsContainer.appendChild(cartItem);
-      });
-   }
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
 
-   function toggleCartPopup() {
-      cartPopup.classList.toggle('active');
-   }
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
-   document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', () => {
-         const courseName = button.getAttribute('data-course');
-         const coursePrice = 499; // Example price
-         cart.push({ name: courseName, price: coursePrice });
-         updateCartCount();
-         updateCartPopup();
-      });
-   });
+            // Check if the email and password match the specified values
+            if (email === 'shubham@gmail.com' && password === 'shubham12345') {
+                alert('Login successful!');
+                window.location.href = 'home.html'; // Redirect to index page
+            } else {
+                alert('Invalid email or password. Please try again.');
+            }
+        });
 
-   cartBtn.addEventListener('click', toggleCartPopup);
-</script>
+        // Cart functionality
+        const cart = [];
 
+        function addToCart(courseName, price) {
+            cart.push({ courseName, price });
+            updateCart();
+        }
+
+        function updateCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            cartItemsContainer.innerHTML = '';
+
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <span>${item.courseName}</span>
+                    <span>$${item.price}</span>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+                total += item.price;
+            });
+
+            cartTotalElement.innerText = `Total: $${total}`;
+        }
+
+        function checkout() {
+            if (cart.length > 0) {
+                alert('Checkout successful!');
+                cart.length = 0; // Clear the cart
+                updateCart();
+            } else {
+                alert('Your cart is empty!');
+            }
+        }
+
+        // Example usage: Call addToCart when a course is completed
+        // addToCart('Course 1 Certificate', 49.99);
+        // addToCart('Course 2 Certificate', 59.99);
+    </script>
 </body>
 </html>
