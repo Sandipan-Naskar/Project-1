@@ -7,47 +7,38 @@
    <title>home</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-
    <link rel="stylesheet" href="homepage.css">
-
 </head>
 <body>
 
 <header class="header">
-   
    <section class="flex">
-
       <a href="home.html" class="logo">Education</a>
-
       <form action="search.html" method="post" class="search-form">
          <input type="text" name="search_box" required placeholder="search courses..." maxlength="100">
          <button type="submit" class="fas fa-search"></button>
       </form>
-
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
          <div id="search-btn" class="fas fa-search"></div>
          <div id="user-btn" class="fas fa-user"></div>
          <div id="toggle-btn" class="fas fa-sun"></div>
+         <div id="cart-btn" class="fas fa-shopping-cart"></div>
+         <span id="cart-count">0</span>
       </div>
-
    </section>
-
 </header>   
 
 <div class="side-bar">
-
    <div id="close-btn">
       <i class="fas fa-times"></i>
    </div>
-
    <div class="profile">
       <img src="https://img.freepik.com/premium-photo/simple-study-smile-logo-graduation-hat-cap-toga-arrow_959624-27809.jpg?size=626&ext=jpg&ga=GA1.1.325011917.1722362251&semt=ais_hybrid" class="image" alt="">
       <h3 class="name">SHUBHAM</h3>
       <p class="role">learner</p>
       <a href="home.html" class="btn">Namaste!</a>
    </div>
-
    <nav class="navbar">
       <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
       <a href="home.html"><i class="fas fa-question"></i><span>About</span></a>
@@ -55,15 +46,11 @@
       <a href="home.html"><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a>
       <a href="home.html"><i class="fas fa-headset"></i><span>contact us</span></a>
    </nav>
-
 </div>
 
 <section class="home-grid">
-
    <h1 class="heading">quick options</h1>
-
    <div class="box-container">
-
       <div class="box">
          <h3 class="title">likes and comments</h3>
          <p class="likes">total likes : <span>25</span></p>
@@ -103,17 +90,11 @@
          <p class="tutor">Join us.Your ability to make learning enjoyable and meaningful is a gift</p>
          <a href="home.html" class="inline-btn">get started</a>
       </div>
-
    </div>
-
 </section>
 
-
-
 <section class="courses">
-
    <h1 class="heading">our courses</h1>
-
    <div class="box-container">
 
       <div class="box">
@@ -130,6 +111,7 @@
          </div>
          <h3 class="title">complete HTML tutorial</h3>
          <a href="htmlcourse.html" class="inline-btn">view playlist</a>
+         <button class="add-to-cart" data-course="Complete HTML Tutorial" data-price="49.99">Buy Certificate - $49.99</button>
       </div>
 
       <div class="box">
@@ -146,6 +128,7 @@
          </div>
          <h3 class="title">complete CSS tutorial</h3>
          <a href="csscourse.html" class="inline-btn">view playlist</a>
+         <button class="add-to-cart" data-course="Complete CSS Tutorial" data-price="39.99">Buy Certificate - $39.99</button>
       </div>
 
       <div class="box">
@@ -162,9 +145,8 @@
          </div>
          <h3 class="title">complete JS tutorial</h3>
          <a href="jscourse.html" class="inline-btn">view playlist</a>
+         <button class="add-to-cart" data-course="Complete JS Tutorial" data-price="59.99">Buy Certificate - $59.99</button>
       </div>
-
-
 
       <div class="box">
          <div class="tutor">
@@ -180,6 +162,7 @@
          </div>
          <h3 class="title">complete JQuery tutorial</h3>
          <a href="jquery.html" class="inline-btn">view playlist</a>
+         <button class="add-to-cart" data-course="Complete JQuery Tutorial" data-price="29.99">Buy Certificate - $29.99</button>
       </div>
 
       <div class="box">
@@ -196,6 +179,7 @@
          </div>
          <h3 class="title">complete SASS tutorial</h3>
          <a href="sasscourse.html" class="inline-btn">view playlist</a>
+         <button class="add-to-cart" data-course="Complete SASS Tutorial" data-price="19.99">Buy Certificate - $19.99</button>
       </div>
 
    </div>
@@ -206,28 +190,72 @@
 
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+<div id="cart">
+   <h2>Shopping Cart</h2>
+   <div id="cart-items">
+      <p>Your cart is empty.</p>
+   </div>
+   <div id="cart-total"></div>
+   <button id="checkout-btn" class="inline-option-btn">Checkout</button>
+</div>
 
 <footer class="footer">
-
    &copy; copyright @ 2024 by <span>SHUBHAM ,SANDIPAN</span> | all rights reserved!
-
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/js/all.min.js"></script>
+<script>
+   let cart = [];
 
+   function updateCart() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = '';
+      if (cart.length === 0) {
+         cartItemsContainer.innerHTML = '<p>Your cart is empty.</p>';
+      } else {
+         cart.forEach((item, index) => {
+            const cartItem = document.createElement('div');
+            cartItem.classList.add('cart-item');
+            cartItem.innerHTML = `
+               <p>${item.course} - $${item.price}</p>
+               <button onclick="removeFromCart(${index})">Remove</button>
+            `;
+            cartItemsContainer.appendChild(cartItem);
+         });
+      }
+      updateCartTotal();
+   }
 
-   
+   function updateCartTotal() {
+      const total = cart.reduce((sum, item) => sum + parseFloat(item.price), 0);
+      document.getElementById('cart-total').textContent = `Total: $${total.toFixed(2)}`;
+      document.getElementById('cart-count').textContent = cart.length;
+   }
+
+   function addToCart(course, price) {
+      cart.push({ course, price });
+      updateCart();
+   }
+
+   function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+   }
+
+   document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+         const course = button.getAttribute('data-course');
+         const price = button.getAttribute('data-price');
+         addToCart(course, price);
+      });
+   });
+
+   document.getElementById('checkout-btn').addEventListener('click', () => {
+      alert('Proceeding to checkout.');
+   });
+
+   updateCart();
+</script>
+
 </body>
 </html>
